@@ -53,7 +53,7 @@ val mauricioVersion = "0.2.21"
 lazy val commonDependencies = Seq(
   "com.typesafe.akka"   %% "akka-actor"           % akkaVersion,
   "com.typesafe.akka"   %% "akka-persistence"     % akkaVersion,
-  "org.scalikejdbc"     %% "scalikejdbc-async"    % "0.7.1",
+  "org.scalikejdbc"     %% "scalikejdbc-async"    % "0.9.0",
   "com.github.mauricio" %% "mysql-async"          % mauricioVersion % "provided",
   "com.github.mauricio" %% "postgresql-async"     % mauricioVersion % "provided",
   "com.typesafe.akka"   %% "akka-persistence-tck" % akkaVersion     % "test",

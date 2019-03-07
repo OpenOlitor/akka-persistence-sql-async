@@ -1,7 +1,11 @@
 package akka.persistence.common
 
+import java.util.concurrent.TimeUnit
+
 import akka.actor.{ExtendedActorSystem, Extension, ExtensionId, ExtensionIdProvider}
-import scalikejdbc.async.{AsyncConnectionPool, AsyncConnectionPoolSettings}
+import scalikejdbc.async.{AsyncConnectionPool, AsyncConnectionPoolSettings, AsyncConnectionSettings}
+
+import scala.concurrent.duration.Duration
 
 private[persistence] object ScalikeJDBCExtension extends ExtensionId[ScalikeJDBCExtension] with ExtensionIdProvider {
   override def createExtension(system: ExtendedActorSystem): ScalikeJDBCExtension = {
@@ -24,6 +28,9 @@ private[persistence] class ScalikeJDBCExtension(system: ExtendedActorSystem) ext
     password = if (config.password == "") null else config.password,
     settings = AsyncConnectionPoolSettings(
       maxPoolSize = config.maxPoolSize,
-      maxQueueSize = config.waitQueueCapacity)
+      maxQueueSize = config.waitQueueCapacity,
+      connectionSettings = AsyncConnectionSettings(None, None, None, None,
+        Some(Duration(30, TimeUnit.SECONDS)), Some(Duration(30, TimeUnit.SECONDS)), Some(Duration(30, TimeUnit.SECONDS)))
+    )
   )
 }
